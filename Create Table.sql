@@ -19,3 +19,15 @@ INSERT INTO employee VALUES
 (9, 'David', 'Wilson', '2021-09-01', 90000.00, 5),
 (10, 'Laura', 'Taylor', '2021-10-01', 95000.00, 5);
 
+CREATE TABLE department (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    location VARCHAR(50)
+);
+
+INSERT INTO department VALUES
+(1, 'Sales', 'New York'),
+(2, 'Marketing', 'Los Angeles'),
+(3, 'Finance', 'Chicago'),
+(4, 'Human Resources', 'Houston'),
+(5, 'Information Technology', 'San Francisco');
