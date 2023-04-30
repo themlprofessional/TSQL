@@ -43,20 +43,24 @@ begin
 end
 */
 
+-------------------------------------------------
+
+-- Procedure to get Employees by Department
+
 create procedure GetEmployeesByDepartment
     @department_id int
 as
 begin
-    select e.id, e.first_name, e.last_name, e.hire_date, d.name as department_name
-    from employee e
-    join department d on e.department_id = d.id
-    where e.department_id = @department_id
-    order by e.hire_date;
+    select e.employee_id, e.first_name, e.last_name, e.salary, d.name as department_name
+    from employees e
+    join departments d on
+    e.department_id = d.department_id
+    where e.department_id = @department_id;
 end
 
 exec GetEmployeesByDepartment @department_id = 1;
 
------------------------------------------------------------------------------------
+-------------------------------------------------
 
 -- Retrive Total Salary for a given Department
 
@@ -64,19 +68,19 @@ create procedure GetTotalSalaryByDepartment
     @department_id int
 as
 begin
-    select distinct sum(salary) as total_salary
-    from employee
+    select sum(salary) as total_salary
+    from employees 
     where department_id = @department_id;
 end
 
 exec GetTotalSalaryByDepartment @department_id = 1;
 
------------------------------------------------------------------------------------
+-------------------------------------------------
 
--- Procedure to insert new record into employee table
+-- Procedure to isert new record into employees table
 
-create procedure InsertEmployee
-    @id int,
+create procedure InsertNewEmployee
+    @employee_id int,
     @first_name varchar(50),
     @last_name varchar(50),
     @hire_date date,
@@ -84,27 +88,27 @@ create procedure InsertEmployee
     @department_id int
 as
 begin
-    insert into employee(id, first_name, last_name, hire_date, salary, department_id)
-    values (@id, @first_name, @last_name, @hire_date, @salary, @department_id);
+    insert into employees(employee_id, first_name, last_name, hire_date, salary, department_id)
+    values (@employee_id, @first_name, @last_name, @hire_date, @salary, @department_id);
 end
 
-exec InsertEmployee 11, 'New', 'Emloyee', '2020-02-01', 23000.00, 1;
+exec InsertNewEmployee 11, 'New', 'Employee', '2001-01-01', 25000, 1;
 
-select * from employee;
+select * from employees;
 
+-------------------------------------------------
 
-----------------------------------------------------------------------------------
+-- Procedure to update salary in employees table
 
--- Procedure to update salary in employee table
-
-create procedure UpdateEmployee
-    @id int,
-    @NewSalary int
+create procedure UpdateEmployeeSalary
+    @employee_id int,
+    @new_salary decimal(10, 2)
 as
 begin
-    update employees set salary = @NewSalary where employee_id = @id;
+    update employees set salary = @new_salary
+    where employee_id = @employee_id;
 end
 
-exec UpdateEmployee 1, 25000;
+exec UpdateEmployeeSalary 1, 10000;
 
 select * from employees;
