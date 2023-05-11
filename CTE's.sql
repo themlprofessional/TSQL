@@ -31,3 +31,27 @@ INSERT INTO departments VALUES
 (3, 'Finance', 'Chicago'),
 (4, 'Human Resources', 'Houston'),
 (5, 'Information Technology', 'San Francisco');
+
+-- employee hierarchy
+alter table employees add manager_id int;
+
+update employees set manager_id = null where employee_id = 1;
+update employees set manager_id = 1 where employee_id in (2,3);
+update employees set manager_id = 2 where employee_id in (4,5);
+update employees set manager_id = 3 where employee_id in (6,7);
+update employees set manager_id = 4 where employee_id in (8,9);
+update employees set manager_id = 5 where employee_id = 10;
+
+-- this query returns employee hierarchy
+with EmployeeHierarchy(employee_id, first_name, last_name, manager_id, level) as (
+select employee_id, first_name, last_name, manager_id, 0 as level
+from employees
+where manager_id is null
+union all
+select e.employee_id, e.first_name, e.last_name, e.manager_id, level + 1
+from employees e
+inner join EmployeeHierarchy eh
+on e.manager_id = eh.employee_id
+)
+
+select * from EmployeeHierarchy;
