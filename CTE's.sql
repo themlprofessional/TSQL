@@ -32,6 +32,20 @@ INSERT INTO departments VALUES
 (4, 'Human Resources', 'Houston'),
 (5, 'Information Technology', 'San Francisco');
 
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- 1) Basic CTE
+
+-- It returns employees with their corresponding departments
+with EmployeeDepartment as (
+select e.employee_id, e.first_name, e.last_name, d.name as department_names
+from employees e
+inner join departments d on e.department_id = d.department_id
+  )
+select * from EmployeeDepartment;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
 -- employee hierarchy
 alter table employees add manager_id int;
 
