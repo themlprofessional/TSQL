@@ -56,9 +56,36 @@ inner join departments d
 on e.department_id = d.department_id
 group by d.name
   )
+  
 select * from DepartmentSalary;
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
+
+-- 3) CTE with multiple CTE's
+
+-- This query returns highest and lowest salary for each department
+with DepartmentHighestSalary as (
+select d.name as department_name, max(e.salary) as highest_salary
+from employees e
+inner join departments d on
+e.department_id = d.department_id
+group by d.name
+  ),
+DepartmentLowestSalary as (
+select d.name as department_name, min(e.salary) as lowest_salary
+from employees e
+inner join departments d on
+e.department_id = d.department_id
+group by d.name
+  )
+
+select h.department_name, h.highest_salary, l.lowest_salary
+from DepartmentHighestSalary h
+inner join DepartmentLowestSalary l on
+h.department_name = l.department_name;
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
 -- employee hierarchy
 alter table employees add manager_id int;
 
