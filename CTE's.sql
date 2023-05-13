@@ -46,6 +46,19 @@ select * from EmployeeDepartment;
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
+-- 2) CTE with aggregation
+
+-- This query returns total salary for each department
+with DepartmentSalary as (
+select d.name as department_name, sum(e.salary) as total_salary
+from employees e
+inner join departments d
+on e.department_id = d.department_id
+group by d.name
+  )
+select * from DepartmentSalary;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
 -- employee hierarchy
 alter table employees add manager_id int;
 
