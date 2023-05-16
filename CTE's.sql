@@ -86,6 +86,8 @@ h.department_name = l.department_name;
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
+-- 4) Recursive CTE
+
 -- employee hierarchy
 alter table employees add manager_id int;
 
