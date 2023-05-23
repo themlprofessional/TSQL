@@ -111,3 +111,17 @@ on e.manager_id = eh.employee_id
 )
 
 select * from EmployeeHierarchy;
+
+
+with EmployeeHierarchy as (
+select employee_id, first_name, last_name, manager_id, 0 as level
+from employees
+where manager_id is null
+union all
+select e.employee_id, e.first_name, e.last_name, e.manager_id, level + 1
+from employees e
+join EmployeeHierarchy eh
+on e.manager_id = eh.employee_id
+)
+
+select * from EmployeeHierarchy;
